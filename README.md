@@ -21,116 +21,305 @@ Step 7: Then analysis began for the two scenarios.
 
 ### The SQL file that shows the analysis is added to this read.me file.
 
-#### The answer to each question is as follows:
-### Case Scenario I
+## The answer to each question is as follows:
+## Case Scenario I
 
-##### Q1. Which product category had the highest sales?
+### Q1. Which product category had the highest sales?
+  select product_category, sum([Sales]) as [Total Sales]
+  
+  from [dbo].[KMS Sql Case Study]
+  
+  group by Product_Category
+  
+  order by [Total Sales] desc
+  
+  ###-----ANSWER: Product category had the highest sales is  "TECHNOLOGY" as shown in the result below
+  
+| Product_Category | Total Sales |
+| --- | --- |
+| 1. Technology | 5,984,248.18 |
+| 2. Furniture | 5,178,590.54|
+| 3. Office Supplies | 3,752,762.10 |
+ 
 
-Ans: Technology
+### Q2: What are the Top 3 and Bottom 3 regions in terms of sales?
 
-###### Q2: What are the Top 3 and Bottom 3 regions in terms of sales?
+### ---Q2A: Top 3 regions in terms of sales------
 
-Ans 2a: The top 3 region in terms of sales are:
+select TOP 3 Region, sum([Sales]) as [Total Sales]
 
-i. Nunavut
+from [dbo].[KMS Sql Case Study]
+ 
+group by Region
 
-ii. Northwest Territories
+order by [Total Sales] asc
 
-iii. Yukon
+### --The top 3 region in terms of sales are:
 
-##### Q2b The bottom 3 region in terms of sales are:
+1. Nunavut
+
+2. Northwest Territories
+
+3. Yukon
+
+### ---Q2B: Bottom 3 regions in terms of sales------
+
+select TOP 3 Region, sum([Sales]) as [Total Sales]
+
+from [dbo].[KMS Sql Case Study]
+ 
+group by Region
+
+order by [Total Sales] desc
+
+### Q2b The bottom 3 region in terms of sales are:
+
 i. West
 
 ii. Ontario
 
 iii. Prarie
 
-##### Q3: What were the total sales of appliances in Ontario?
+### Q3: What were the total sales of appliances in Ontario?
+--- Q3: Total Sales of Appliances in Ontario---
 
-    Product_Sub_Category			      Total Sales
+select Product_Sub_Category, sum([Sales]) as [Total Sales]
 
-1.	Pens & Art Supplies				      34,858.00
+from [dbo].[KMS Sql Case Study]
+ 
+where Region = 'Ontario'
 
-2.	Office Machines					        306,497.31
+group by Product_Sub_Category
 
-3.	Copiers and Fax					        127,683.14
+| Product_Sub_Category | Total Sales |
+| --- | --- |
+| 1. Pens & Art Supplies | 34,858.00 |
+| 2. Office Machines | 306,497.31 |
+| 3. Copiers and Fax | 127,683.14 |
+| 4.	Bookcases | 103,999.47 |
+| 5.	Scissors, Rulers and Trimmers | 21,334.81 |
+| 6.	Chairs & Chairmats | 438,172.13 |
+| 7. Storage & Organization | 236,636.89 |
+| 8.	Telephones and Communication | 395,085.1595 |
+| 9.	Envelopes | 32,721.09 |
+|10.	Labels | 9,088.61 |
+|11.	Office Furnishings	|  161,005.97|
+|12.	Computer Peripherals| 196,898.12|
+|13.	Rubber Bands		| 3,540.98|
+|14.	Appliances	|  202,346.84|
+|15.	Paper	|  99,936.15|
+|16.	Binders and Binder Accessories	|286,967.88|
+|17.	Tables	|406,439.93|
 
-4.	Bookcases						            103,999.47
+### Q4: Advise the management of KMS on what to do to increase the revenue from the bottom 10 customers
+select TOP 10 Customer_Name,Shipping_Cost,Sales,Discount,Unit_Price, sum([Order_Quantity]) as [Order Quantity]
 
-5.	Scissors, Rulers and Trimmers	  21,334.81
+from [dbo].[KMS Sql Case Study]
+ 
+group by Customer_Name,Shipping_Cost,Sales,Discount,Unit_Price
 
-6.	Chairs & Chairmats				      438,172.13
+order by [Order Quantity] asc
 
-7.	Storage & Organization			    236,636.89
+-------------------------------------
 
-8.	Telephones and Communication	  395,085.1595
+select TOP 10 Customer_Name, sum([Sales]) as [Total Sales]
 
-9.	Envelopes						            32,721.09
+from [dbo].[KMS Sql Case Study]
 
-10.	Labels							            9,088.61
+group by Customer_Name
 
-11.	Office Furnishings				      161,005.97
+order by [Total Sales] asc
 
-12.	Computer Peripherals			      196,898.12
+select TOP 10 Customer_Name, count([Sales]) as [Total Sales]
 
-13.	Rubber Bands					          3,540.98
+from [dbo].[KMS Sql Case Study]
 
-14.	Appliances						          202,346.84
+group by Customer_Name
 
-15.	Paper							              99,936.15
+order by [Total Sales] asc
 
-16.	Binders and Binder Accessories	286,967.88
+## Answer
+---It was observed from the analysis that the bottom 10 customers hardly made sales in the year conisdered, some made sales once, and others just twice. In order for the management of KMS TO increase the revenue from the bottom 10 customers, the management need to encourage these customers by giving more discount that will encourage more sales and in return more income to the company. They also need to look at the  acceptance rate of their product by the customer at these regions, thereby gaining insight on what to do such as rebranding, advertisement, e.t.c. Similarly, the unit price of the items should be given consideration.---
 
-17.	Tables						            	406,439.93
-
-##### Q4: Advise the management of KMS on what to do to increase the revenue from the bottom 10 customers
-Ans: It was observed from the analysis that the bottom 10 customers hardly made sales in the year conisdered, some made sales once, and others just twice. In order for the management of KMS to increase the revenue from the bottom 10 customers, the management need to encourage these customers by giving more discount that will encourage more sales and in return more income to the company. They also need to look at the  acceptance rate of their product by the customer at these regions, thereby gaining insight on what to do such as rebranding, advertisement, e.t.c.
 
 ##### Q5: KMS incurred the most shipping cost using which shipping method?
-Ans: Delivery Truck
+select Ship_Mode, sum([Shipping_Cost]) as [Total Shipping Cost]
 
-### Case Scenario II
+from [dbo].[KMS Sql Case Study]
+
+group by Ship_Mode
+
+order by [Total Shipping Cost] asc
+
+---KMS incurred the highest cost shipping cost by using "Delivery Truck"---
+
+|Ship_Mode	| Total Shipping Cost|
+| --- | --- |
+|1. Express Air|	7,850.91|
+|2. Regular Air	|48,008.19|
+|3. Delivery Truck|	51,971.94|
+
+
+## Case Scenario II
 #### Q6. Who are the most valuable customers, and what products or services do they typically purchase?
+select top 10 Customer_Segment,Product_Sub_Category,Customer_Name, sum([Sales]) as [Total Sales]
 
-Ans: The top 10 valuable customers with the product/services they purchased are:
-  
-  Names				        Product_Sub_Category
+	from [dbo].[KMS Sql Case Study]
+ 
+group by Customer_Segment,Product_Sub_Category,Customer_Name
 
-1. Emily Phan		    	Office Machines
+order by [Total Sales] desc
 
-2. Raymond Book		  	Copiers and Fax
+### Ans: The top 10 valuable customers with the product/services they purchased are:
+|Customer_Segment |Product_Sub_Category,| Customer_Name |Total Sales|
+|--- | ---| ---|---|
+|1. Consumer|	Office Machines|	Emily Phan	|103,652.49|
+|2. Consumer	|Copiers and Fax	|Raymond Book	|51,954.52|
+|3. Small Business|	Copiers and Fax	|Dennis Kane	|49,836.40|
+|4. Home Office	|Office Machines	|Jasper Cacioppo|	45,923.76|
+|5. Small Business|	Binders and Binder Accessories|	Grant Carroll	|45,000.25|
+|6. Small Business	|Copiers and Fax	|Clytie Kelty	|44,344.40|
+|7. Corporate	|Office Machines	|Craig Carreira	|41,343.21|
+|8. Corporate	|Bookcases	|Roy Skaria|	38,092.34|
+|9. Consumer|	Office Machines|	Roy Phan	|36,853.45|
+|10. Corporate	|Tables	|Lisa DeCherney	|34,363.45|
+### Q7: Which small business customer had the highest sales?
+select TOP 1 * 
 
-3. Dennis Kane		  	Copiers and Fax
+from [dbo].[KMS Sql Case Study]
 
-4. Jasper Cacioppo		Office Machines
+where Customer_Segment = 'small business'
 
-5. Grant Carroll		  Binders and Binder Accessories
+order by [Sales] desc
 
-6. Clytie Kelty			  Copiers and Fax
-
-7. Craig Carreira		  Office Machines
-
-8. Roy Skaria			    Bookcases
-
-9. Roy Phan				    Office Machines
-
-10. Lisa DeCherney		Tables
+### --The small business customer with the highest sale is Dennis Kane with Prodduct category (Technology) and Product_Sub_Category (Copiers and Fax)--
+|Row_ID|Order_ID|	Order_Date	|Order_Priority|	Order_Quantity	|Sales	|Discount	|Ship_Mode	|Profit		|Unit_Price|	Shipping_Cost	|Customer_Name|Province	|Region|	Customer_Segment|	Product_Category	|Product_sub_Category|	Product_Name	|Product_Container	|Product_Base_Margin|	Ship_Date|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|2026|	14435	|	2012-12-01|	Not Specified|	9.0|33367.85	|0.01	|	Regular Air|	3992.52	|3499.99|	24.49|	Dennis Kane	| Quebec|Quebec	|Small Business|		Technology	|		Copiers and Fax	|		Canon imageCLASS 2200 Advanced Copier|	Large Box	|		0.370000004768372	|2012-12-04	|
 
 
+### Q8: Which Corporate Customer placed the most number of orders in 2009 – 2012?
+select TOP 1 * 
+
+from [dbo].[KMS Sql Case Study]
+
+where Customer_Segment = 'corporate'
+
+order by [Order_Quantity] desc
+#### Ans: Sonia Cooley
+|Row_ID|Order_ID|	Order_Date	|Order_Priority|	Order_Quantity	|Sales	|Discount	|Ship_Mode	|Profit		|Unit_Price|	Shipping_Cost	|Customer_Name|Province	|Region|	Customer_Segment|	Product_Category	|Product_sub_Category|	Product_Name	|Product_Container	|Product_Base_Margin|	Ship_Date|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|65	|384|	2012-03-02|	Low|	50.00|	7666.04|	0.02|	Delivery Truck|	-1820.84|	146.05|	80.20|	Sonia Cooley|	Alberta	|West|	Corporate	|Furniture	|Tables	|BPI Conference Tables|	Jumbo Box|	0.709999978542328|	2012-03-09|
+
+### Q9: Which consumer customer was the most profitable one?
+select TOP 1 * 
+
+from [dbo].[KMS Sql Case Study]
+
+where Customer_Segment = 'consumer'
+
+order by [Profit] desc
+
+### Ans: Emily Phan
+|Row_ID|Order_ID|	Order_Date	|Order_Priority|	Order_Quantity	|Sales	|Discount	|Ship_Mode	|Profit		|Unit_Price|	Shipping_Cost	|Customer_Name|Province	|Region|	Customer_Segment|	Product_Category	|Product_sub_Category|	Product_Name	|Product_Container	|Product_Base_Margin|	Ship_Date|
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+|4190|	29766|		2009-03-21|	Medium	|		13.00	|		89061.05	|0.00|		Regular Air	|	27220.69|	6783.02	|	24.4900000000	|Emily Phan	|	New Brunswick	|Atlantic|	Consumer	|Technology	|OfficeMachines	|	Polycom ViewStation™ ISDN Videoconferencing Unit|Large Box	|		0.389999985694885|	2009-03-22|
 
 
-##### Q7: Which small business customer had the highest sales?
-Ans: Dennis Kane with Prodduct category (Technology) and Product_Sub_Category (Copiers and Fax)
+### Q10: Which customer returned items, and what segment do they belong to?
 
-##### Q8: Which Corporate Customer placed the most number of orders in 2009 – 2012?
-Ans: Sonia Cooley
+select *from (
 
-##### Q9: Which consumer customer was the most profi table one?
-Ans: Emily Phan
+	select [Order_ID],Customer_Segment,Product_Sub_Category,Customer_Name 
+ 
+	from [dbo].[KMS Sql Case Study]) as Customer
+ 
+join (
 
-##### Q10: Which customer returned items, and what segment do they belong to?
-Ans: From the data supplied by KMS limilited, it wasn't recorded that customers returned products.
+select [Order_ID], [Status]
 
-##### Q11: If the delivery truck is the most economical but the slowest shipping method and Express Air is the fastest but the most expensive one, do you think the company appropriately spent shipping costs based on the Order Priority? Explain your answer.
-Ans: Based on the analysis above and the fact that delivery truck is most economical but slowest, it shows that the company didn't spent her shipping cost appropriately becasue the total shipping cost for the High and medium piority shipping of 22665.42 + 20513.93 which is  equals to 43,179.35 doesn't correlate with the amount spend for shipping through Express Air which is the fastest which totalled 7,850.91. This equally means that the company gave more priority to shipping through truck which is slowest and which supposed to be economical,
-but acccording to the analysis, it wasn't economical.
+	from [KMS_DB].[dbo].[Order_Status]) as Returned
+ 
+on Customer.[Order_ID] = Returned.[Order_ID]
+
+order by [customer_Name] asc
+
+---- There are 872 customers that returned items/products.---
+
+---The top 10 customers that returned the product in ascending order and their segment are---
+|Customer_Segment|	Customer_Name	|
+|---|---|
+|1. Corporate|Aaron Bergman|
+|2. Corporate|Aaron Bergman|
+|3. Corporate|Aaron Bergman|
+|4. Home Office	|Aaron Hawkins|
+|5. Home Office	|Aaron Hawkins|
+|6. Home Office|Aaron Hawkins|
+|7. Home Office	|Aaron Hawkins|
+|8. Small Business|	Adam Bellavance|
+|9. Small Business|Adrian Barton|
+|10. Small Business|Adrian Barton|
+
+## Q11: If the delivery truck is the most economical but the slowest shipping method and Express Air is the fastest but the most expensive one, do you think the company appropriately spent shipping costs based on the Order Priority? Explain your answer.
+
+Select top 5 Order_Priority,Ship_Mode,Count(Order_ID) As [Order_Count] 
+
+From [dbo].[KMS Sql Case Study] 
+
+Group by Order_Priority,Ship_Mode 
+
+Order by [Order_Count] Desc
+
+
+---The top five orders in order of piority is as follows:
+|Order_Priority	|		Ship Mode|			Order_Count|
+|---|---|---|
+|1. High	|				Regular Air		|		1,308|
+|2. Low				|	Regular Air		|		1,280|
+|3. Not Specified	|	Regular Air		|		1,277|
+|4. Medium		|		Regular Air		|		1,225|
+|5. Critical			|	Regular Air		|		1,180|
+
+----------ORDER_PRIORITY AND SHIP MODE----------
+
+select top 5 Order_Priority,Ship_Mode,ROUND(SUM(Sales - Profit),2) AS EstimatedShippingCost,
+
+AVG(DATEDIFF(day, [Order_Date], [Ship_Date])) AS AvgShipDays
+
+From [KMS Sql Case Study] 
+
+Group By Order_Priority,Ship_Mode 
+
+Order by [EstimatedShippingCost] asc
+
+------The 10 Lowest Estimated Shipping Cost based on Order_Priority is as follows:
+
+|Order_Priority	|	Ship_Mode	|		EstimatedShippingCost|
+|---|---|---|
+|1. Low		|		Express Air	|		191,312.13|
+|2. Not Specified|	Express Air		|	194,393.97|
+|3. Critical|			Express Air		|	198,005.40|
+|4. High			|	Express Air		|	206,125.18|
+|5. Medium		|	Express Air		|	247,151.91|
+
+----Estimated Profit based on Order_Priority and Ship_Mode
+
+select top 5 Order_Priority,Ship_Mode,ROUND(SUM(Profit),2) AS EstimatedProfit,
+
+AVG(DATEDIFF(day, [Order_Date], [Ship_Date])) AS AvgShipDays
+
+From [KMS Sql Case Study] 
+
+Group By Order_Priority,Ship_Mode 
+
+Order by [EstimatedProfit] desc
+
+----The top 5 EstimatedShippingCostbyProfit----
+|Order_Priority	|	Ship_Mode	|	EstimatedProfit|
+|---|---|---|
+|1. High	|			Regular Air	|	288,321.40|
+|2. Low	|			Regular Air	|	261,530.26|
+|3. Medium		|	Regular Air|		228,402.26|
+|4. Critical	|		Regular Air		|165,445.77|
+|5. Not Specified	|Regular Air	|	160,993.11|
+#### ANS: Base on the order of priority, even though delivery truck is most economical, and express air is the fastest and most expensive, the shipping costs based on the Order Priority was appropriately spent by the company. This is due to the fact that based on the order of priority, regular air has both the highest number of order and the profit even though the it has high estimated shipping cost which was a known fact that both regular and express mode of shipping items cost more than the delivery trcuk.
