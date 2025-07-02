@@ -45,7 +45,23 @@ Step 7: Then analysis began for the two scenarios.
 ### Q2: What are the Top 3 and Bottom 3 regions in terms of sales?
 
 ### ---Q2A: Top 3 regions in terms of sales------
+select TOP 3 Region, sum([Sales]) as [Total Sales]
 
+from [dbo].[KMS Sql Case Study]
+ 
+group by Region
+
+order by [Total Sales] desc
+
+### Q2b The bottom 3 region in terms of sales are:
+
+i. West
+
+ii. Ontario
+
+iii. Prarie
+
+### ---Q2B: Bottom 3 regions in terms of sales------
 select TOP 3 Region, sum([Sales]) as [Total Sales]
 
 from [dbo].[KMS Sql Case Study]
@@ -62,23 +78,6 @@ order by [Total Sales] asc
 
 3. Yukon
 
-### ---Q2B: Bottom 3 regions in terms of sales------
-
-select TOP 3 Region, sum([Sales]) as [Total Sales]
-
-from [dbo].[KMS Sql Case Study]
- 
-group by Region
-
-order by [Total Sales] desc
-
-### Q2b The bottom 3 region in terms of sales are:
-
-i. West
-
-ii. Ontario
-
-iii. Prarie
 
 ### Q3: What were the total sales of appliances in Ontario?
 --- Q3: Total Sales of Appliances in Ontario---
